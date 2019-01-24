@@ -10,5 +10,8 @@ namespace RandomProduct.Interfaces
         void RemoveProductFromBasket(Product product);
         List<ProductResponseModel> ListProducts();
         List<Product> ListWholeProducts();
+        Product GetProduct(string productId);
+        Product GetProductByName(string productName);
+        List<Product> GetProductsByName(string productName);
     }
 }

@@ -11,5 +11,6 @@ namespace RandomProduct.Interfaces
         List<Product> GetWholeProducts();
         Product GetProduct(string id);
         void RemoveProduct(Product product);
+        void AddProduct(Product product);
     }
 }

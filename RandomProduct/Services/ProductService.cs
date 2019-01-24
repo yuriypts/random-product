@@ -40,5 +40,10 @@ namespace RandomProduct.Services
         {
             Products.Remove(product);
         }
+
+        public void AddProduct(Product product)
+        {
+            Products.Add(product);
+        }
     }
 }

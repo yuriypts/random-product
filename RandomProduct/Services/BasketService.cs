@@ -13,12 +13,10 @@ namespace RandomProduct.Services
         public void AddProductToBasket(Product product)
         {
             Products.Add(product);
-            base.CheckDiscounts(Products);
         }
         public void RemoveProductFromBasket(Product product)
         {
             Products.Remove(product);
-            base.CheckDiscounts(Products);
         }
         public List<ProductResponseModel> ListProducts()
         {
@@ -29,6 +27,21 @@ namespace RandomProduct.Services
         public List<Product> ListWholeProducts()
         {
             return Products;
+        }
+
+        public Product GetProduct(string productId)
+        {
+            return Products.FirstOrDefault(x => x.ProductId == productId);
+        }
+
+        public Product GetProductByName(string productName)
+        {
+            return Products.FirstOrDefault(x => x.Name == productName);
+        }
+
+        public List<Product> GetProductsByName(string productName)
+        {
+            return Products.Where(x => x.Name == productName).ToList();
         }
     }
 }

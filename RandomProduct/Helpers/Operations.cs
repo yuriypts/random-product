@@ -2,6 +2,7 @@
 using RandomProduct.Enums;
 using RandomProduct.Interfaces;
 using RandomProduct.Models;
+using RandomProduct.Models.Data;
 using RandomProduct.Models.ExtendsModels;
 using RandomProduct.Services;
 using System;
@@ -68,14 +69,21 @@ namespace RandomProduct.Helpers
 
                     if (wholeProductsInBasket.Any())
                     {
+                        BasketService basketServiceUpCast = basketService as BasketService;
+                        Dictionary<string, double> discounts = basketServiceUpCast.CheckDiscounts(wholeProductsInBasket);
+                        double basketSum = wholeProductsInBasket.Sum(x => x.Cost);
+
                         foreach (var item in productsInBasket)
                         {
                             Console.WriteLine("\nName - {0},\n Count - {1},\n Sub-total-item - {2}", item.ProductName, item.CountProducts, wholeProductsInBasket.Where(x => x.ProductId == item.ProductId).Sum(x => x.Cost));
+                            Console.WriteLine("Any discount applicable - {0}", discounts.FirstOrDefault(x => x.Key == item.ProductId).Value);
                         }
 
-                        Console.WriteLine("Sub-total of the basket - {0}", wholeProductsInBasket.Sum(x => x.Cost));
-                        Console.WriteLine("Discount - empty");
-                        Console.WriteLine("Grant Total Price - with discount");
+                        Console.WriteLine("Sub-total of the basket - {0}", basketSum);
+                        Console.WriteLine("Grant Total Price - {0}", Math.Abs(basketSum - discounts.Values.Sum()));
+
+                        Console.WriteLine(new string('-', 80));
+                        OpenBasketOperations();
                     }
                     else
                     {
@@ -103,6 +111,81 @@ namespace RandomProduct.Helpers
 
             Console.WriteLine(new string('-', 80));
             OpenGeneralOperations();
+        }
+
+        public static void OpenBasketOperations()
+        {
+            Console.WriteLine($"Choose operation (please enter the number):\n " +
+                $"{(int)BasketOperationsEnum.RemoveProduct} - Remove product one at time from\n" +
+                $"{(int)BasketOperationsEnum.RemoveProductsAsAWhole} - Remove products as a whole from basket\n" +
+                $"{(int)BasketOperationsEnum.GoToMainMenu} - Go to main menu");
+
+            string value = Console.ReadLine();
+
+            int operationNumber;
+            int.TryParse(value, out operationNumber);
+
+            switch (operationNumber)
+            {
+                case (int)BasketOperationsEnum.RemoveProduct:
+                    Console.WriteLine("Plese provide the name product");
+                    string nameProduct = Console.ReadLine();
+
+                    Product product = basketService.GetProductByName(nameProduct);
+
+                    if (product != null)
+                    {
+                        basketService.RemoveProductFromBasket(product);
+                        productService.AddProduct(product);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Provided name is incorrect, please try again");
+                    }
+
+                    Console.WriteLine(new string('-', 80));
+                    OpenGeneralOperations();
+
+                    break;
+
+                case (int)BasketOperationsEnum.RemoveProductsAsAWhole:
+                    Console.WriteLine("Plese provide the name product");
+                    string nameProductAll = Console.ReadLine();
+
+                    List<Product> productAll = basketService.GetProductsByName(nameProductAll);
+
+                    if (productAll != null)
+                    {
+                        foreach (var item in productAll)
+                        {
+                            basketService.RemoveProductFromBasket(item);
+                            productService.AddProduct(item);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Provided name is incorrect, please try again");
+                    }
+
+                    Console.WriteLine(new string('-', 80));
+                    OpenGeneralOperations();
+
+                    break;
+
+                case (int)BasketOperationsEnum.GoToMainMenu:
+                    Console.WriteLine(new string('-', 80));
+                    OpenGeneralOperations();
+
+                    break;
+
+                default:
+                    Console.WriteLine("Provide operation is incorrect, please try again");
+
+                    break;
+            }
+
+            Console.WriteLine(new string('-', 80));
+            OpenBasketOperations();
         }
     }
 }

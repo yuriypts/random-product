@@ -10,9 +10,9 @@ namespace RandomProduct.Data
 
         static DataDiscount()
         {
-            FillDiscount("RP-25D-SITB", "Buy 2 or more Bags of Pogs and get 50% off each bag (excluding the first one)", 2, new DiscountResult(50, "RP-25D-SITB"));
-            FillDiscount("RP-1TB-EITB", "Buy a Large bowl of Trifle and get a free Paper Mask.", 2, new DiscountResult(100, "RP-RPM-FITB"));
-            FillDiscount("RP-5NS-DITB", "Buy 100 or more Shurikens and get 30% off whole basket.", 100, new DiscountResult(30, ""));
+            FillDiscount("RP-25D-SITB", "Buy 2 or more Bags of Pogs and get 50% off each bag (excluding the first one)", 2, new DiscountResult(0.5, "RP-25D-SITB"));
+            FillDiscount("RP-1TB-EITB", "Buy a Large bowl of Trifle and get a free Paper Mask.", 2, new DiscountResult(1, "RP-RPM-FITB"));
+            FillDiscount("RP-5NS-DITB", "Buy 100 or more Shurikens and get 30% off whole basket.", 100, new DiscountResult(0.3, ""));
         }
 
         private static void FillDiscount(string productId, string discountName, int discountCondition, DiscountResult discountResult)
@@ -21,7 +21,7 @@ namespace RandomProduct.Data
             //  productId - discount for what product,
             //  discountCondition - e.x. Buy "2" or more.... or Buy "100" or more... and ect...
             //  discountResult - discountResult.Percents - discount by percents, discountResult.ProductId - discount for what product, (discountResult.ProductId == Empty - for whole basket)
-            if ((discountCondition == 0 || discountCondition < 1) || (discountResult.Percents == 0 || discountResult.Percents < 1))
+            if ((discountCondition == 0 || discountCondition < 0) || (discountResult.Percents == 0 || discountResult.Percents < 0))
             {
                 throw new Exception();
             }
