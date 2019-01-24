@@ -6,5 +6,6 @@
         ByProduct = 2,
         OpenBasket = 3,
         CloseProgram = 4,
+        Discounts = 5
     }
 }

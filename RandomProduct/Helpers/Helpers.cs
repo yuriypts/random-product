@@ -10,7 +10,7 @@ namespace RandomProduct.Helpers
         {
             foreach (var item in products)
             {
-                Console.WriteLine("id - {0}, name - {1}, count - {2}, cost - {3}", item.ProductId, item.ProductName, item.CountProducts, item.ProductCost);
+                Console.WriteLine("Id - {0}, Name - {1}, Count - {2}, Cost - {3}", item.ProductId, item.ProductName, item.CountProducts, item.ProductCost);
             }
         }
     }

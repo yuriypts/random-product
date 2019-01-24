@@ -7,7 +7,7 @@ namespace RandomProduct.Interfaces
     public interface IBasketService
     {
         void AddProductToBasket(Product product);
-        void RemoveProductToBasket(Product product);
+        void RemoveProductFromBasket(Product product);
         List<ProductResponseModel> ListProducts();
         List<Product> ListWholeProducts();
     }

@@ -6,17 +6,19 @@ using System.Linq;
 
 namespace RandomProduct.Services
 {
-    public class BasketService : IBasketService
+    public class BasketService : DiscountService, IBasketService
     {
         public List<Product> Products = new List<Product>();
 
         public void AddProductToBasket(Product product)
         {
             Products.Add(product);
+            base.CheckDiscounts(Products);
         }
-        public void RemoveProductToBasket(Product product)
+        public void RemoveProductFromBasket(Product product)
         {
             Products.Remove(product);
+            base.CheckDiscounts(Products);
         }
         public List<ProductResponseModel> ListProducts()
         {

@@ -29,7 +29,8 @@ namespace RandomProduct.Helpers
                 $"{(int)GeneralOperationsEnum.ListProducts} - Get list of Products\n " +
                 $"{(int)GeneralOperationsEnum.ByProduct} - By the Product\n " +
                 $"{(int)GeneralOperationsEnum.OpenBasket} - Open my Basket\n " +
-                $"{(int)GeneralOperationsEnum.CloseProgram} - Close Program");
+                $"{(int)GeneralOperationsEnum.CloseProgram} - Close Program\n" +
+                $"{(int)GeneralOperationsEnum.Discounts} - Get All Discounts\n");
 
             string value = Console.ReadLine();
 
@@ -85,6 +86,14 @@ namespace RandomProduct.Helpers
 
                 case (int)GeneralOperationsEnum.CloseProgram:
                     return;
+
+                case (int)GeneralOperationsEnum.Discounts:
+                    foreach (var item in DataDiscount.DiscountDatas)
+                    {
+                        Console.WriteLine(item.Name);
+                    }
+
+                    break;
 
                 default:
                     Console.WriteLine("Provide operation is incorrect, please try again");
