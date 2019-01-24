@@ -35,5 +35,10 @@ namespace RandomProduct.Services
         {
             return Products.FirstOrDefault(x => x.ProductId == id);
         }
+
+        public void RemoveProduct(Product product)
+        {
+            Products.Remove(product);
+        }
     }
 }

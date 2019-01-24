@@ -6,7 +6,7 @@ namespace RandomProduct.Helpers
 {
     public static class Helpers
     {
-        public static void ShowProductInMarket(List<ProductResponseModel> products)
+        public static void ShowProductsInMarket(List<ProductResponseModel> products)
         {
             foreach (var item in products)
             {

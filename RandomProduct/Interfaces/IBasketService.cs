@@ -1,4 +1,5 @@
 ﻿using RandomProduct.Models;
+using RandomProduct.Models.ExtendsModels;
 using System.Collections.Generic;
 
 namespace RandomProduct.Interfaces
@@ -7,6 +8,7 @@ namespace RandomProduct.Interfaces
     {
         void AddProductToBasket(Product product);
         void RemoveProductToBasket(Product product);
-        List<Product> ListProducts();
+        List<ProductResponseModel> ListProducts();
+        List<Product> ListWholeProducts();
     }
 }

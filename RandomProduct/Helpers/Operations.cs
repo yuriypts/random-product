@@ -39,12 +39,12 @@ namespace RandomProduct.Helpers
             switch (operationNumber)
             {
                 case (int)GeneralOperationsEnum.ListProducts:
-                    Helpers.ShowProductInMarket(productService.GetProducts());
+                    Helpers.ShowProductsInMarket(productService.GetProducts());
 
                     break;
 
                 case (int)GeneralOperationsEnum.ByProduct:
-                    Helpers.ShowProductInMarket(productService.GetProducts());
+                    Helpers.ShowProductsInMarket(productService.GetProducts());
 
                     Console.WriteLine("Choose the product (please enter Id product)");
                     string productId = Console.ReadLine();
@@ -52,23 +52,34 @@ namespace RandomProduct.Helpers
                     Product product = productService.GetProduct(productId);
 
                     if (product != null)
+                    {
+                        productService.RemoveProduct(product);
                         basketService.AddProductToBasket(product);
+                    }
                     else
                         Console.WriteLine("Product was not found please try again");
 
                     break;
 
                 case (int)GeneralOperationsEnum.OpenBasket:
-                    List<Product> productsInBasket = basketService.ListProducts();
+                    List<ProductResponseModel> productsInBasket = basketService.ListProducts();
+                    List<Product> wholeProductsInBasket = basketService.ListWholeProducts();
 
-                    foreach (var item in productsInBasket.Distinct())
+                    if (wholeProductsInBasket.Any())
                     {
-                        Console.WriteLine("\nName - {0},\n Count - {1},\n Sub-total-item - {2}", item.Name, productsInBasket.Count(x => x.Id == item.Id), productsInBasket.Where(x => x.Id == item.Id).Sum(x => x.Cost));
-                    }
+                        foreach (var item in productsInBasket)
+                        {
+                            Console.WriteLine("\nName - {0},\n Count - {1},\n Sub-total-item - {2}", item.ProductName, item.CountProducts, wholeProductsInBasket.Where(x => x.ProductId == item.ProductId).Sum(x => x.Cost));
+                        }
 
-                    Console.WriteLine("Sub-total of the basket - {0}", productsInBasket.Sum(x => x.Cost));
-                    Console.WriteLine("Discount - empty");
-                    Console.WriteLine("Grant Total Price - with discount");
+                        Console.WriteLine("Sub-total of the basket - {0}", wholeProductsInBasket.Sum(x => x.Cost));
+                        Console.WriteLine("Discount - empty");
+                        Console.WriteLine("Grant Total Price - with discount");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Basket is empty");
+                    }
 
                     break;
 
