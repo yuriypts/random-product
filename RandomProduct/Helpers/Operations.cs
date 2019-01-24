@@ -2,6 +2,7 @@
 using RandomProduct.Enums;
 using RandomProduct.Interfaces;
 using RandomProduct.Models;
+using RandomProduct.Models.ExtendsModels;
 using RandomProduct.Services;
 using System;
 using System.Collections.Generic;
@@ -38,22 +39,16 @@ namespace RandomProduct.Helpers
             switch (operationNumber)
             {
                 case (int)GeneralOperationsEnum.ListProducts:
-                    foreach (var item in productService.GetProducts())
-                    {
-                        Console.WriteLine("id - {0}, name - {1}, count - {2}, cost - {3}", item.Id, item.Name, item.Count, item.Cost);
-                    }
+                    Helpers.ShowProductInMarket(productService.GetProducts());
 
                     break;
 
                 case (int)GeneralOperationsEnum.ByProduct:
-                    foreach (var item in productService.GetProducts())
-                    {
-                        Console.WriteLine("id - {0}, name - {1}, count - {2}, cost - {3}", item.Id, item.Name, item.Count, item.Cost);
-                    }
+                    Helpers.ShowProductInMarket(productService.GetProducts());
 
                     Console.WriteLine("Choose the product (please enter Id product)");
                     string productId = Console.ReadLine();
-                    
+
                     Product product = productService.GetProduct(productId);
 
                     if (product != null)
@@ -66,7 +61,7 @@ namespace RandomProduct.Helpers
                 case (int)GeneralOperationsEnum.OpenBasket:
                     List<Product> productsInBasket = basketService.ListProducts();
 
-                    foreach (var item in productsInBasket)
+                    foreach (var item in productsInBasket.Distinct())
                     {
                         Console.WriteLine("\nName - {0},\n Count - {1},\n Sub-total-item - {2}", item.Name, productsInBasket.Count(x => x.Id == item.Id), productsInBasket.Where(x => x.Id == item.Id).Sum(x => x.Cost));
                     }

@@ -2,16 +2,16 @@
 {
     public class Product
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
+        public string ProductId { get; set; }
         public string Name { get; set; }
-        public int Count { get; set; }
         public double Cost { get; set; }
 
-        public Product(string id, string name, int count, double cost)
+        public Product(int id, string productId, string name, double cost)
         {
             Id = id;
+            ProductId = productId;
             Name = name;
-            Count = count;
             Cost = cost;
         }
     }

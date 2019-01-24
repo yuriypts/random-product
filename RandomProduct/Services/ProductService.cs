@@ -1,9 +1,8 @@
 ﻿using RandomProduct.Interfaces;
 using RandomProduct.Models;
-using System;
+using RandomProduct.Models.ExtendsModels;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace RandomProduct.Services
 {
@@ -21,14 +20,20 @@ namespace RandomProduct.Services
             }
         }
 
-        public List<Product> GetProducts()
+        public List<ProductResponseModel> GetProducts()
+        {
+            var distinctList = Products.Select(x => new { x.ProductId, x.Name, CountProducts = Products.Count(y => y.ProductId == x.ProductId), x.Cost }).Distinct();
+            return distinctList.Select(x => new ProductResponseModel { ProductId = x.ProductId, ProductName = x.Name, CountProducts = x.CountProducts, ProductCost = x.Cost }).ToList();
+        }
+
+        public List<Product> GetWholeProducts()
         {
             return Products;
         }
 
         public Product GetProduct(string id)
         {
-            return Products.FirstOrDefault(x => x.Id == id);
+            return Products.FirstOrDefault(x => x.ProductId == id);
         }
     }
 }
